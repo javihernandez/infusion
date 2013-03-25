@@ -93,7 +93,11 @@ var fluid = fluid || fluid_1_5;
             togo = fluid.get(expander.source, fluid.model.composePaths(expander.inputPrefix, inputPath), expander.resolverGetConfig);
         }
         if (togo === undefined) {
-            togo = fluid.isPrimitive(value) ? value : expander.expand(value);
+            if (value instanceof Object && value.hasOwnProperty('expander')) {
+                togo = expander.expand(value);
+            } else {
+                togo = value;
+            }
         }
         return togo;
     };
