@@ -36,7 +36,9 @@ var upInfusion;
 
 var upPath = path.resolve(__dirname, "../../../../..");
 var upInfusionPath = resolveModuleSync("infusion", upPath);
-if (upInfusionPath) {
+
+/** Fix for FLUID-5940: Ensure that upInfusionPath != __filename **/
+if ((upInfusionPath) && (upInfusionPath != __filename)) {
     upInfusion = require(upInfusionPath);
     upInfusion.log("Resolved infusion from path " + __dirname + " to " + upInfusion.module.modules.infusion.baseDir);
     module.exports = upInfusion;
